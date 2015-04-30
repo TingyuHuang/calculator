@@ -1,0 +1,61 @@
+<!--
+       ,gggg,                                          ,gggg,                                                                                         
+      d8" "8I          I8      I8   ,dPYb,           ,88"""Y8b,            ,dPYb,                       ,dPYb,              I8                        
+      88  ,dP          I8      I8   IP'`Yb          d8"     `Y8            IP'`Yb                       IP'`Yb              I8                        
+   8888888P"     gg 8888888888888888I8  8I         d8'   8b  d8            I8  8I                       I8  8I           88888888                     
+      88         ""    I8      I8   I8  8'        ,8I    "Y88P'            I8  8'                       I8  8'              I8                        
+      88         gg    I8      I8   I8 dP   ,ggg, I8'            ,gggg,gg  I8 dP    ,gggg,  gg      gg  I8 dP    ,gggg,gg   I8     ,ggggg,   ,gggggg, 
+ ,aa,_88         88    I8      I8   I8dP   i8" "8id8            dP"  "Y8I  I8dP    dP"  "Yb I8      8I  I8dP    dP"  "Y8I   I8    dP"  "Y8gggdP""""8I 
+dP" "88P         88   ,I8,    ,I8,  I8P    I8, ,8IY8,          i8'    ,8I  I8P    i8'       I8,    ,8I  I8P    i8'    ,8I  ,I8,  i8'    ,8I ,8'    8I 
+Yb,_,d88b,,_   _,88,_,d88b,  ,d88b,,d8b,_  `YbadP'`Yba,,_____,,d8,   ,d8b,,d8b,_ ,d8,_    _,d8b,  ,d8b,,d8b,_ ,d8,   ,d8b,,d88b,,d8,   ,d8',dP     Y8,
+ "Y8P"  "Y888888P""Y88P""Y8  8P""Y88P'"Y88888P"Y888 `"Y8888888P"Y8888P"`Y88P'"Y88P""Y8888PP8P'"Y88P"`Y88P'"Y88P"Y8888P"`Y88P""Y8P"Y8888P"  8P      `Y8
+-->
+<!DOCTYPE html>
+<html>
+<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<link rel=stylesheet type="text/css" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<body>
+
+<div ng-app="myApp" ng-controller="buttonCtrl">
+<table class="myCalculator">
+<tr>
+<td>
+<table class="myBigScreen">
+<tr>
+	<td class="myExpression">{{ expression }}</td>
+</tr>
+<tr>
+	<td class="myResult">{{ expressionResult }}</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<table>
+<tr>
+<td>
+	<table>
+	<tr ng-repeat="x in leftButtons">
+		<td ng-repeat="y in x"><button ng-click="pressLeftButton(y)" class="myLeftButton">{{ y }}</button></td>
+	</tr>
+	</table>
+</td>
+<td>
+	<table>
+	<tr ng-repeat="x in rightButtons">
+		<td><button ng-click="pressRightButton(x)" class="myRightButton">{{ x }}</button></td>
+	</tr>
+	</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+
+<script src="buttons.js"></script>
+
+</body>
+</html> 
