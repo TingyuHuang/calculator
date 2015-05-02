@@ -1,4 +1,7 @@
 angular.module('myApp', []).controller('buttonCtrl', function($scope) {
+	var divisionSign = "\u00F7";
+	var multipleSign = "\u00D7";
+
     $scope.expression = '';
     $scope.expressionResult = '';
     $scope.numberOfSymbol = 0;
@@ -10,10 +13,10 @@ angular.module('myApp', []).controller('buttonCtrl', function($scope) {
 		['.', '0', '=']
 	];
 	
-	$scope.rightButtons = ['C', 'CE', '÷', '×', '-', '+'];
+	$scope.rightButtons = ['C', 'CE', divisionSign, multipleSign, '-', '+'];
 	
 	$scope.calculate = function() {
-		var expression = $scope.expression.replace('÷', '/').replace('×', '*');
+		var expression = $scope.expression.replace(divisionSign, '/').replace(multipleSign, '*');
 		
 		try {
 			$scope.expressionResult = eval(expression).toString();
