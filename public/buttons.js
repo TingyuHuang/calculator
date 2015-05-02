@@ -1,4 +1,4 @@
-angular.module('myApp', []).controller('buttonCtrl', function($scope) {
+angular.module('myApp', []).controller('buttonCtrl', function($scope, $http) {
 	var divisionSign = "\u00F7";
 	var multipleSign = "\u00D7";
 
@@ -31,7 +31,18 @@ angular.module('myApp', []).controller('buttonCtrl', function($scope) {
 		}
 		return true;
 	}
-	
+	$scope.post = function(c) {
+		var token = $('meta[name="csrf-token"]').attr('content');
+
+		$http.defaults.headers.post = {
+			'X-CSRF-Token': token,
+			'Content-Type': 'application/json'
+		};
+		$http.post("/calculator", {"input": c}).success(function(response) {
+			console.log('[' + response + ']');
+		});
+	}
+
 	$scope.clearAll = function() {
 		$scope.expression = '';
 		$scope.expressionResult = '';
@@ -40,6 +51,8 @@ angular.module('myApp', []).controller('buttonCtrl', function($scope) {
 	
 	$scope.pressRightButton = function(s) {
 		console.log('input ' + s);
+		$scope.post(s);
+
 		switch (s) {
 			case 'C':
 				$scope.clearAll();
@@ -90,6 +103,8 @@ angular.module('myApp', []).controller('buttonCtrl', function($scope) {
 	
 	$scope.pressLeftButton = function(s) {
 		console.log('input ' + s);
+		$scope.post(s);
+
 		switch (s) {
 			case '=':
 				$scope.calculate();
@@ -102,7 +117,6 @@ angular.module('myApp', []).controller('buttonCtrl', function($scope) {
 				$scope.numberOfSymbol = 0;
 				break;
 			case '.':
-				console.log('Oops...');
 				break;
 			case '0':
 				if (0 === $scope.expression.length) {
