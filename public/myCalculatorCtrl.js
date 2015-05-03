@@ -1,4 +1,4 @@
-angular.module('myApp', []).controller('buttonCtrl', function($scope, $http) {
+angular.module('myCalculatorApp', []).controller('myCalculatorCtrl', function($scope, $http) {
 	var divisionSign = "\u00F7";
 	var multipleSign = "\u00D7";
 
