@@ -2,32 +2,32 @@ angular.module('myCalculatorApp', []).controller('myCalculatorCtrl', function($s
 	var divisionSign = "\u00F7";
 	var multipleSign = "\u00D7";
 
-    $scope.expression = '';
-    $scope.expressionResult = '';
-    $scope.numberOfSymbol = 0;
-    
+	$scope.expression = '';
+	$scope.expressionResult = '';
+	$scope.numberOfSymbol = 0;
+
 	$scope.leftButtons = [
 		['7', '8', '9'],
 		['4', '5', '6'],
 		['1', '2', '3'],
 		['.', '0', '=']
 	];
-	
+
 	$scope.rightButtons = ['C', 'CE', divisionSign, multipleSign, '-', '+'];
-	
+
 	$scope.calculate = function() {
 		var expression = $scope.expression.replace(divisionSign, '/').replace(multipleSign, '*');
-		
+
 		try {
 			$scope.expressionResult = eval(expression).toString();
 		} catch (e) {
-			console.log(e.message);	
+			console.log(e.message);
 		}
 	}
-	
+
 	var isAlpha = function(c) {
 		if (c.search(/[^A-Za-z\s]/) != -1) {
-			return false;	
+			return false;
 		}
 		return true;
 	}
@@ -39,14 +39,20 @@ angular.module('myCalculatorApp', []).controller('myCalculatorCtrl', function($s
 			'Content-Type': 'application/json'
 		};
 		$http.post("/calculator", {"input": c}).success(function(response) {
-			console.log('[' + response + ']');
+			if (response.js) {
+				eval(response.js);
+			}
+
+			if (response.html) {
+				$("body").html(response.html);
+			}
 		});
 	}
 
 	$scope.clearAll = function() {
 		$scope.expression = '';
 		$scope.expressionResult = '';
-		$scope.numberOfSymbol = 0;	
+		$scope.numberOfSymbol = 0;
 	}
 	
 	$scope.pressRightButton = function(s) {
@@ -132,14 +138,13 @@ angular.module('myCalculatorApp', []).controller('myCalculatorCtrl', function($s
 						$scope.expression = $scope.expression.substring(0, $scope.expression.length - 1);
 					}
 				}
-			
-			
+
 				$scope.expression += s;
 				if ($scope.numberOfSymbol > 0) {
 					try {
 						$scope.calculate();
 					} catch (e) {
-						console.log(e.message);	
+						console.log(e.message);
 					}
 				}
 				break;
