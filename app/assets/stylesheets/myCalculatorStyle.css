@@ -1,10 +1,14 @@
-html body {
+html, body {
 	background: grey;
+	height: 97%;
+}
+
+#ng-scope {
 	height: 100%;
 	min-height: 100%;
 }
 
-html table {
+table {
 	width: 100%;
 	height: 100%;
 	border-collapse: collapse;
