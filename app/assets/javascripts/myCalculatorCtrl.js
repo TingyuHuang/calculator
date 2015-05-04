@@ -5,6 +5,7 @@ angular.module('myCalculatorApp', []).controller('myCalculatorCtrl', function($s
 	$scope.expression = '';
 	$scope.expressionResult = '';
 	$scope.numberOfSymbol = 0;
+	$scope.fadeOut = false;
 
 	$scope.leftButtons = [
 		['7', '8', '9'],
@@ -31,6 +32,7 @@ angular.module('myCalculatorApp', []).controller('myCalculatorCtrl', function($s
 		}
 		return true;
 	}
+
 	$scope.post = function(c) {
 		var token = $('meta[name="csrf-token"]').attr('content');
 
@@ -39,12 +41,12 @@ angular.module('myCalculatorApp', []).controller('myCalculatorCtrl', function($s
 			'Content-Type': 'application/json'
 		};
 		$http.post("/calculator", {"input": c}).success(function(response) {
-			if (response.js) {
-				eval(response.js);
+			if (response.html) {
+				$("body").append(response.html);
 			}
 
-			if (response.html) {
-				$("body").html(response.html);
+			if (response.js) {
+				eval(response.js);
 			}
 		});
 	}
@@ -123,6 +125,7 @@ angular.module('myCalculatorApp', []).controller('myCalculatorCtrl', function($s
 				$scope.numberOfSymbol = 0;
 				break;
 			case '.':
+				$scope.fadeOut = !$scope.fadeOut;
 				break;
 			case '0':
 				if (0 === $scope.expression.length) {
