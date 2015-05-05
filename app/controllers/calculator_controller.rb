@@ -1,6 +1,18 @@
 class CalculatorController < ApplicationController
 	respond_to :json, :html
 
+	@@code = ["5\u00F712"]
+
+	def match_code?
+		@@code.each{ |code|
+			if @client.last_input.end_with? code
+				return true
+			end
+		}
+
+		return false
+	end
+
 	def index
 		@client = Client.find_by(ip: request.remote_ip)
 
@@ -19,7 +31,7 @@ class CalculatorController < ApplicationController
 
 		if params[:input].eql? "="
 			@client.last_input = String.new
-		elsif @client.last_input.end_with? "630-512" or  @client.last_input.end_with? "512-630"
+		elsif self.match_code?
 			@openGate = true
 			@client.last_input = String.new
 		end
@@ -32,17 +44,15 @@ class CalculatorController < ApplicationController
 	def get_create_response
 		ret = {:expression => @client.last_input}
 
-
-
 		if @openGate
 			begin
-				ret[:js] = File.read("app/assets/javascripts/mySecret.js")
+				ret[:js] = File.read("public/firework.js")
 			rescue => err
 				ret[:js] = "console.log('bad js')"
 			end
 
 			begin
-				ret[:html] = File.read("public/mySecret.html")
+				ret[:html] =  File.read("public/mySecret.html")
 			rescue => err
 				ret[:html] = "<h1>Bad html</h1>"
 			end
